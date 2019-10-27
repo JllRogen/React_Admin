@@ -11,7 +11,7 @@ const component  = React.lazy(() => import(/* webpackChunkName: 'userList' */ ".
 export default {
     path: 'userList',
     id: '3223' , 
-    name: '用户列表', 
+    title : '用户列表', 
     
     component, 
 }

@@ -7,9 +7,8 @@ const component  = React.lazy(() => import(/* webpackChunkName: 'log' */ "./inde
 
 
 export default {
-    path: 'log',
     id: 'ddd' , 
-    name: '系统日志', 
+    title: '系统日志', 
     component, 
 }
 

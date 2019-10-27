@@ -13,7 +13,7 @@ import {
 
 import Layout from '../layout'
 
-const routes = require('./modules/sys').default
+const {routes} = require('./modules/sys')
 
 /**
  * 主路由

@@ -8,7 +8,7 @@ const component  = React.lazy(() => import(/* webpackChunkName: 'roleMgr' */ "./
 export default {
     path: 'msgList',
     id: '32323' , 
-    name: '消息列表', 
+    title: '消息列表', 
     component, 
 }
 
