@@ -7,7 +7,6 @@ const { Sider } = Layout
 const { SubMenu } = Menu
 /**
  * 侧边栏组件
- * 
  * @export
  * @class
  * @extends {Component}
@@ -29,28 +28,18 @@ export default class extends Component {
             >
                 <div className="logo" />
 
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1" >
-                        <NavLink to="/home">
+                        <NavLink to="/sys/log">
                             <Icon type="home" />
-                            首页
+                            log日志
                         </NavLink>
                     </Menu.Item>
                     <Menu.Item key="2">
-                        <NavLink to="/about">
+                        <NavLink to="/sys/msg/msgList">
                             <Icon type="video-camera" />
-                            关于
+                            信息列表
                         </NavLink>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <NavLink to='/rogen/3232'>
-                            <Icon type="upload" />
-                            <span className="nav-text">rogen 3</span>
-                        </NavLink>
-                    </Menu.Item>
-                    <Menu.Item key="4">
-                        <Icon type="user" />
-                        <span className="nav-text">nav 4</span>
                     </Menu.Item>
                     <SubMenu key="sub1" title={
                         <span>
