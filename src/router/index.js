@@ -50,24 +50,5 @@ function RouteWithSubRoutes(route) {
 }
 
 
-
-
-
-
-
-
-
-
-// function Child(params) {
-//     console.log(useRouteMatch())
-//     let { id } = useParams()
-//     return (
-//         <div>id : {id}</div>
-//     )
-// }
-
-
-
-
 export default AppRouter;
 

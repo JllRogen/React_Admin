@@ -1,7 +1,6 @@
 
 import React, { Component } from "react"
 
-import {Button } from 'antd'
 export  default class  extends Component {
     constructor(props) {
         super(props)
@@ -9,10 +8,7 @@ export  default class  extends Component {
     }
     render(){
         return (
-            <div>
-                <Button type='primary'>rogen</Button>
-            </div>
-            
+            <div>参数设置</div>
         )
     }
 }
