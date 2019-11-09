@@ -10,11 +10,10 @@ process.env.NODE_ENV = 'development';
 process.on('unhandledRejection', err => {
   throw err;
 });
-
 // Ensure environment variables are read.
 require('../config/env');
 
-
+console.log('rogen  start .........')
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
 const webpack = require('webpack');
@@ -111,7 +110,7 @@ checkBrowsers(paths.appPath, isInteractive)
         return console.log(err);
       }
       if (isInteractive) {
-        clearConsole();
+        // clearConsole();
       }
 
       // We used to support resolving modules according to `NODE_PATH`.
@@ -127,11 +126,11 @@ checkBrowsers(paths.appPath, isInteractive)
       }
 
       console.log(chalk.cyan('Starting the development server...\n'));
-      openBrowser(urls.localUrlForBrowser);
+      // openBrowser(urls.localUrlForBrowser);
     });
 
-    ['SIGINT', 'SIGTERM'].forEach(function(sig) {
-      process.on(sig, function() {
+    ['SIGINT', 'SIGTERM'].forEach(function (sig) {
+      process.on(sig, function () {
         devServer.close();
         process.exit();
       });

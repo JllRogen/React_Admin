@@ -1,12 +1,15 @@
 
 import React, { Component } from "react"
 
-export  default class  extends Component {
+export default class extends Component {
     constructor(props) {
         super(props)
-        this.state = {  }
+        this.state = {}
     }
-    render(){
+    componentDidMount() {
+        console.log("log componentDidMount")
+    }
+    render() {
         return (
             <div>系统日志</div>
         )

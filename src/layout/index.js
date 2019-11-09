@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import RgSide from './rg-side'
 import RgHeader from './rg-header'
 import RgContent from './rg-content'
+// import RgFooter from './rg-footer'
 import { Layout } from 'antd';
 
 import './index.less'
-const { Footer } = Layout
+// const { Footer } = Layout
 
 export default class extends Component {
     constructor(props) {
@@ -15,13 +16,14 @@ export default class extends Component {
         }
     }
     render() {
+        console.log(323424334234324234)
         return (
             <Layout className='rg-layout'>
                 <RgSide />
                 <Layout>
                     <RgHeader />
                     <RgContent> {this.props.children} </RgContent>
-                    <Footer style={{ textAlign: 'center' }}>jll rogen @ 2019</Footer>
+                    {/* <RgFooter /> */}
                 </Layout>
             </Layout>
         )

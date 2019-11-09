@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense } from "react";   //  lazy Suspense必须同时使用
 
 
 import {
@@ -13,7 +13,8 @@ import {
 
 import Layout from '../layout'
 
-const {routes} = require('./modules/sys')
+
+const { routes } = require('./modules/sys')
 
 /**
  * 主路由
@@ -22,31 +23,31 @@ const {routes} = require('./modules/sys')
  */
 function AppRouter() {
     return (
-        <Router>
+        <Router getUserConfirmation={(result, callback) => {
+            debugger
+            // callback(true)
+        }}>
             <Layout>
                 <Suspense fallback={<div>loading....</div>}>
                     <Switch>{
-                        routes.map((route ) =>(
-                            <RouteWithSubRoutes key={route.path} {...route}/> 
+                        routes.map((route) => (
+                            <RouteWithSubRoutes key={route.path} {...route} />
                         ))
                     }</Switch>
                 </Suspense>
             </Layout>
-        </Router>
+        </Router >
     )
 }
 
 
 function RouteWithSubRoutes(route) {
-  return (
-    <Route
-      path={route.path}
-      component={route.component}
-    //   render={props => (
-    //     <route.component {...props} routes={route.routes} />
-    //   )}
-    />
-  );
+    return (
+        <Route
+            path={route.path}
+            component={route.component}
+        />
+    );
 }
 
 

@@ -6,7 +6,6 @@ import './index.less'
 const { Content } = Layout
 /**
  * 内容组件
- * 
  * @export
  * @class
  * @extends {Component}

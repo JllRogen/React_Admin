@@ -1,7 +1,30 @@
 .rg-side {
-    .logo {
-        height: 32px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px;
+    .rg-side-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .logo {
+            font-size: 24px;
+            text-align: center;
+            height: 60px;
+
+            padding: 10px;
+            color: #fff;
+
+            >div {
+                background: rgba(255, 255, 255, 0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+        }
+
+        .menu-wrapper {
+            flex: auto;
+            overflow-y: scroll;
+        }
     }
+
 }
