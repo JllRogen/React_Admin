@@ -55,6 +55,9 @@ console.log(menuMap)
 
 
 
+
+
+
 Object.keys(menuMap).forEach(path => {
     let menu = menuMap[path]
     if (menu.level !== 1) {
@@ -77,5 +80,16 @@ Object.keys(menuMap).forEach(path => {
         upMenu.menus.push(menu)
     }
 })
+
+
+
+
+
+export function getUpPathByPath(path) {
+    let menu = menuMap[path]
+    if (!menu) return null
+    let upPath = menu.upPath
+    return upPath
+}
 
 export const menus = menuMap['/sys'].menus

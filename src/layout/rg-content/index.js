@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React, { } from "react";
 
 import { Layout, } from 'antd';
 import './index.less'
@@ -10,14 +10,10 @@ const { Content } = Layout
  * @class
  * @extends {Component}
  */
-export default class extends Component {
-    render() {
-        return (
-            <Content className='rg-content'>
-                <div >
-                    {this.props.children}
-                </div>
-            </Content>
-        )
-    }
+export default function (props) {
+    return (
+        <Content className='rg-content'>
+            <div >{props.children}</div>
+        </Content>
+    )
 }

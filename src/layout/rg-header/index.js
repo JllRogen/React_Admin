@@ -1,5 +1,5 @@
 
-import React, { Component } from "react";
+import React from "react";
 
 import { Layout, } from 'antd';
 import './index.less'
@@ -11,16 +11,8 @@ const { Header } = Layout
  * @class
  * @extends {Component}
  */
-export default class extends Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-
-    //     }
-    // }
-    render() {
-        return (
-            <Header className='rg-header'></Header>
-        )
-    }
+export default function () {
+    return (
+        <Header className='rg-header'></Header>
+    )
 }

@@ -3,14 +3,15 @@
 */
 
 import React from 'react'
-const component  = React.lazy(() => import(/* webpackChunkName: 'home' */ "./index"))
+const component = () => import(/* webpackChunkName: 'home' */ "./index")
 
-
+// import Home from './index'
 export default {
     path: 'log',
-    id: 'ddd' , 
-    title: '主页', 
-    component, 
+    key: 'ddd',
+    cache: true,  // 缓存页面
+    title: '主页',
+    component,
 }
 
 

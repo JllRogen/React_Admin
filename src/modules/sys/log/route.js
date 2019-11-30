@@ -3,13 +3,14 @@
 */
 
 import React from 'react'
-const component  = React.lazy(() => import(/* webpackChunkName: 'log' */ "./index"))
+const component = () => import(/* webpackChunkName: 'log' */ "./index")
 
+// import Log from './index'
 
 export default {
-    id: 'ddd' , 
-    title: '系统日志', 
-    component, 
+    id: 'ddd',
+    title: '系统日志',
+    component,
 }
 
 
