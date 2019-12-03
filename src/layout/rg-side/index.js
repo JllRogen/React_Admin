@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 
-import history from '../../router/history'
+// import AppRouter, { router } from '@/router'
 
 import { Layout, Menu, Icon, } from 'antd';
 import { menus, getUpPathByPath } from "../../router/modules/sys"
 import './index.less'
 const { Sider } = Layout
 const { SubMenu } = Menu
+
 
 
 /**
@@ -87,8 +88,11 @@ export default function (props) {
 }
 
 function LinkItem({ menu }) {
+    // const history = useHistory()
     return (
-        <div onClick={() => { history.push(menu.path) }} >
+        <div onClick={() => {
+            // router.push(menu.path)
+        }} >
             <Icon type="home" />
             {menu.title}
         </div>

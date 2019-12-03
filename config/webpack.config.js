@@ -41,6 +41,8 @@ const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
 );
 
+
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -61,7 +63,8 @@ module.exports = function (webpackEnv) {
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.
   const publicPath = isEnvProduction ?
-    paths.servedPath :
+    '' :
+    // paths.servedPath :
     isEnvDevelopment && '/';
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
@@ -170,12 +173,12 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction ?
-        'static/js/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
+        'static/[name]/[name].[contenthash:8].js' : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction ?
-        'static/js/[name].[contenthash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
+        'static/[name]/[name].[contenthash:8].chunk.js' : isEnvDevelopment && 'static/js/[name].chunk.js',
       // We inferred the "public path" (such as / or /my-project) from homepage.
       // We use "/" in development.
       publicPath: publicPath,
@@ -282,10 +285,10 @@ module.exports = function (webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
       alias: {
-        '@': '../src',
+        '@': paths.appSrc,
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-        'react-native': 'react-native-web',
+        // 'react-native': 'react-native-web',
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -585,8 +588,8 @@ module.exports = function (webpackEnv) {
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: 'static/css/[name].[contenthash:8].css',
-        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+        filename: 'static/[name]/[name].[contenthash:8].css',
+        chunkFilename: 'static/[name]/[name].[contenthash:8].chunk.css',
       }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
@@ -678,11 +681,11 @@ module.exports = function (webpackEnv) {
     config.optimization.minimize = false
     config.mode = 'none'
     config.externals = {
-      'react': 'React',
-      'react-dom': 'ReactDOM',
-      'redux': 'Redux',
-      'react-router': 'ReactRouter',
-      'react-router-dom': 'ReactRouterDOM',
+      // 'react': 'React',
+      // 'react-dom': 'ReactDOM',
+      // 'redux': 'Redux',
+      // 'react-router': 'ReactRouter',
+      // 'react-router-dom': 'ReactRouterDOM',
       // 'redux-thunk': 'ReduxThunk',
       // 'react-redux': 'ReactRedux',
       // 'redux-form': 'ReduxForm',

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, } from "react"
 
 // import warning from 'tiny-warning';
 
@@ -32,14 +32,18 @@ function useRgLong(x) {
 // let ref = React.createRef()
 export default function Home() {
     console.log("home ")
+    const [test, setTest] = useState(1)
     useEffect(() => {
+        // console.log('aefa ')
         return () => {
-            'home 销毁了'
+            console.log('home 销毁了')
         }
     }, [])
+
     return (
         <div className='home' >
             <h1>home</h1>
+            <Button onClick={() => setTest(test + 1)}>{test}</Button>
             <InputView></InputView>
             <KmView></KmView>
             <MView></MView>

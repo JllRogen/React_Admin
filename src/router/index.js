@@ -1,84 +1,55 @@
-import React, { useEffect, useRef } from "react";   //  lazy Suspense必须同时使用
-import ReactDOM from 'react-dom'
+// import React, { useEffect, useRef } from "react";
+
+import Router from './core/index'
+
 import './index.less'
-import Layout from '../layout'
+
+// import '@/layout/route'
+
+import { getMRoutesByKey } from "./modules/index"
 
 
-import history from './history'
-// import { createHashHistory as createHistory } from "history";
+let routeConfigs = [
 
-const { routes } = require('./modules/sys')
+    Object.assign({}, require('@/layout/route').default, {
+        path: 'sys',
+        children: getMRoutesByKey('sys'),
+    }),
+    ...getMRoutesByKey('login'),
 
-// const history = createHistory({})
+]
 
-const cacheMap = {}
+// const routeMap = require('./modules/index').default
+// const routes = [
 
-let curCache = null
-function handlerHistory(wrapper) {
-    locationChange(history.location, wrapper)
-    return history.listen(location => {
-        locationChange(location, wrapper)
-    });
-}
-
-/**
- * 路由跳转
- * @param {*} location 
- */
-function locationChange(location, wrapper) {
-    const { pathname } = location
-    let route = routes.find(route => (route.path === pathname))
-    if (!route) return
-    curCache && (curCache.el.style.display = 'none')
-    let key = route.path
-    let temp = cacheMap[key]
-    if (!temp) {
-        let el = document.createElement('div')
-        el.className = 'route-item'
-        wrapper.appendChild(el)
-        temp = cacheMap[key] = { el }
-        let component = route.component
-        if (typeof component === "function") {
-            component().then(C => {
-                ReactDOM.render((<C.default />), temp.el, () => {
-
-                })
-            })
-        } else {
-            ReactDOM.render((<component />), temp.el, () => {
-
-            })
-        }
-
-    } else {
-        temp.el.style.display = 'block'
-    }
-    curCache = temp
-}
+// ]
+export default new Router({
+    type: 'hash',
+    routes: routeConfigs
+})
 
 
-/**
- * 主路由
- * @returns
- */
-function AppRouter() {
-    // const [memoRoutes, memoRoutesDispatcher] = useReducer(memoRoutesReducer, [], memoRoutesInit)
-    const ref = useRef(null)
-    // const [location, locationDispatcher] = useReducer(reducer, initialState, init)
-    useEffect(() => {
-        const wrapper = ref.current
 
-        return handlerHistory(wrapper)
 
-    }, []);
-    return (
-        <Layout>
-            {/* <Suspense fallback={<div>loading....</div>}> */}
-            <div className='router-main' ref={ref} />
-            {/* </Suspense> */}
-        </Layout>
-    )
-}
+// /**
+//  * 主路由
+//  * @returns
+//  */
+// function AppRouter() {
+//     const ref = useRef(null)
+//     useEffect(() => {
+//         const wrapper = ref.current
+//         router.$bind(wrapper)
 
-export default AppRouter
+//         // return bindRouterWrapper(wrapper)
+
+//     }, []);
+//     return (
+//         <>
+//             <div className='router-main' ref={ref} />
+//         </>
+//     )
+// }
+
+// export default AppRouter
 

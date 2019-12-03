@@ -9,6 +9,9 @@ export default class extends React.Component {
     render() {
         return <div>324242342s</div>
     }
+    componentWillUnmount() {
+        console.log('log 销毁')
+    }
 }
 
 

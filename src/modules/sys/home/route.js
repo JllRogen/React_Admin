@@ -2,7 +2,6 @@
 * 用户列表模块
 */
 
-import React from 'react'
 const component = () => import(/* webpackChunkName: 'home' */ "./index")
 
 // import Home from './index'

@@ -1,6 +1,6 @@
 
 
-const context = require.context('../../modules/sys', true, /\/route.js$/)
+const context = require.context('@/modules/sys', true, /\/route.js$/)
 // require.context('./test', false, /\.test\.js$/);
 
 export const routes = []
@@ -50,7 +50,7 @@ context.keys().forEach(key => {
     }
 
 })
-console.log(menuMap)
+// console.log(menuMap)
 
 
 
