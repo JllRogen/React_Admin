@@ -1,13 +1,17 @@
 
 
 export function bindMixin(Router) {
-    Router.prototype.$bind = function (wrapper) {
+    Router.prototype.bind = function (wrapper) {
+        if (!wrapper) return
         let router = this
         router.wrapper = wrapper
-        router.$locationChange(router.history.location)
+
+        this.el = createEl()
+        wrapper.appendChild(this.el)
+        router.locationChange(router.history.location)
 
         let unlisen = this.history.listen(location => {
-            router.$locationChange(location)
+            router.locationChange(location)
         })
         this.unbind = () => {
             console.log('解除绑定')
@@ -17,8 +21,17 @@ export function bindMixin(Router) {
         return this.unbind
     }
 
-    Router.prototype.$locationChange = locationChange
+    Router.prototype.locationChange = locationChange
 }
+
+
+
+function createEl() {
+    let el = document.createElement('div')
+    el.className = 'router-main'
+    return el
+}
+
 
 
 /**
@@ -27,7 +40,7 @@ export function bindMixin(Router) {
  */
 function locationChange(location) {
     let { cache } = this
-    let targetRoute = this.$getRoute(location)
+    let targetRoute = this.getRoute(location)
     if (!targetRoute) return
     let key = targetRoute.key
 

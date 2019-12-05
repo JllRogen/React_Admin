@@ -7,7 +7,7 @@ export const component = () => import(/* webpackChunkName: 'login' */ "./index")
 
 export default {
     key: 'login',
-    cache: false,  // 缓存页面
+    // cache: false,  // 缓存页面
     title: '登录',
     component,
 }

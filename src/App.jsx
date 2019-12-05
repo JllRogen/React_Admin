@@ -1,22 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 
+import router from '@/router'
 
 function App() {
   const ref = useRef()
-
-
-  // useEffect(() => {
-  //   debugger
-
-  //   console.log(ref)
-
-  //   // return () => {
-  //   //   cleanup
-  //   // };
-  // }, []);
+  useEffect(() => {
+    return router.bind(ref.current)
+  }, []);
   return (
-    <div className="App" ref={ref} >
-    </div>
+    <div className="App" ref={ref}></div>
   );
 }
 

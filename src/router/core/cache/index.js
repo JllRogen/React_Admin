@@ -1,12 +1,11 @@
 
 
-import { isArray, isFun, isPromise } from '@/libs'
 import CacheItem from './CacheItem'
 
-function RouterCache(router, route) {
+function RouterCache(router) {
     this.router = router
     this.curCacheItem = null
-    this.data = {}
+    this.data = {}  //缓存的数据
 }
 
 
@@ -19,22 +18,24 @@ prototype.getByKey = function (key) {
 prototype.add = function (item) {
     let { key } = item
     this.data[key] = item
-    this.router.wrapper.appendChild(item.el)
+    this.router.el.appendChild(item.el)
 }
 
 prototype.removeByKey = function (key) {
-    let cacheItem = this.cache[key]
+    let cacheItem = this.data[key]
     if (!cacheItem) return
     cacheItem.distroy()
-    this.cache[key] = null
-    delete this.cache[key]
+    this.data[key] = null
+    delete this.data[key]
 }
 
 
 prototype.changeCacheItem = function (cacheItem) {
     let curCacheItem = this.curCacheItem
     if (cacheItem === curCacheItem) return
-    curCacheItem && curCacheItem.hide()
+    if (curCacheItem) {
+        curCacheItem.route.cache ? curCacheItem.hide() : this.removeByKey(curCacheItem.key)
+    }
     cacheItem.show()
     this.curCacheItem = cacheItem
 }

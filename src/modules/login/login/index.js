@@ -1,13 +1,18 @@
 
-import React, { } from 'react'
+import React, { useEffect } from 'react'
 
 
 import { Button } from 'antd'
 /**
  * 登入页面
  */
-export default function Login() {
-
+export default function Login(props) {
+    console.log(props)
+    useEffect(() => {
+        return props.addBeforeHook((location, next) => {
+            debugger
+        })
+    }, []);
     return (
         <div>
             <h1>登入</h1>
@@ -16,3 +21,7 @@ export default function Login() {
     )
 }
 
+// 路由进入的调用
+Login.beforeRouteEnter = function (location, next) {
+    debugger
+}
