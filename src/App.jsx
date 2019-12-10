@@ -1,11 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 
-import router from '@/router'
+import { getRootRouter } from '@/router'
+
+
+let router = null
 
 function App() {
   const ref = useRef()
   useEffect(() => {
-    return router.bind(ref.current)
+    router = getRootRouter()
+    return router.mount(ref.current)
   }, []);
   return (
     <div className="App" ref={ref}></div>

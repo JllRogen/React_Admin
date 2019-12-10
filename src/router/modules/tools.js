@@ -1,7 +1,7 @@
 
 import { isPlainObject, isFun, } from '@/libs'
 
-export function parseContext(context) {
+export function parseContext(context, base = "") {
     let keys = context.keys()
     let list = []
     keys.forEach(key => {
@@ -23,9 +23,12 @@ export function parseContext(context) {
         let meta = isPlainObject(route.meta) ? route.meta : {}
         meta.pathBlocks = pathBlocks
 
+        let path = pathBlocks.join('/')
         let copy = Object.assign({}, route, {
-            path: pathBlocks.join('/'),
-            meta
+            path,
+            base,
+            // matchPath: `/${key}${path}`,
+            meta,
         })
         list.push(copy)
     })

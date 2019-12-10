@@ -34,7 +34,7 @@ prototype.changeCacheItem = function (cacheItem) {
     let curCacheItem = this.curCacheItem
     if (cacheItem === curCacheItem) return
     if (curCacheItem) {
-        curCacheItem.route.cache ? curCacheItem.hide() : this.removeByKey(curCacheItem.key)
+        curCacheItem.routeRecord.cache ? curCacheItem.hide() : this.removeByKey(curCacheItem.key)
     }
     cacheItem.show()
     this.curCacheItem = cacheItem

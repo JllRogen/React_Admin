@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 
-// import AppRouter, { router } from '@/router'
+import { router } from '../index'
 
 import { Layout, Menu, Icon, } from 'antd';
-import { menus, getUpPathByPath } from "../../router/modules/sys"
+import { menus } from "../../router/modules/sys"
 import './index.less'
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -34,9 +34,7 @@ function LinkMenu() {
                                     </span>
                                 }>
                                 {menu.menus.map(subMenu => (
-                                    <Menu.Item key={subMenu.path}
-                                    // onClick={this.handlerClick}
-                                    >
+                                    <Menu.Item key={subMenu.path}>
                                         <LinkItem menu={subMenu}></LinkItem>
                                     </Menu.Item>
                                 ))}
@@ -66,7 +64,7 @@ function LinkMenu() {
 export default function (props) {
     console.log('sider')
     return (
-        <Sider className='rg-side' breakpoint="lg" collapsedWidth={0} collapsible={true} width={220}
+        <Sider className='rg-side' breakpoint="lg" collapsedWidth={0} collapsible={false} width={220}
         // onBreakpoint={broken => {
         //     console.log(broken);
         // }}
@@ -91,7 +89,7 @@ function LinkItem({ menu }) {
     // const history = useHistory()
     return (
         <div onClick={() => {
-            // router.push(menu.path)
+            router.push(menu.path)
         }} >
             <Icon type="home" />
             {menu.title}

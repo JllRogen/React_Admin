@@ -1,30 +1,60 @@
-import React, {
-    // useState, useEffect
-} from "react";
+// eslint-disable-next-line
+import React, { useState, useEffect, useRef } from "react"
+import { getLayoutRouter, getRootRouter } from '@/router'
 import RgSide from './rg-side'
 import RgHeader from './rg-header'
 import RgContent from './rg-content'
-// import RgFooter from './rg-footer'
-import { Layout } from 'antd';
+
+import { Layout } from 'antd'
 
 import './index.less'
-// const { Footer } = Layout
 
-export default function (props) {
-    // const [count, setCount] = useState(0);
-    // useEffect(() => {
-    //     setInterval(() => {
-    //         setCount(count => (count + 1))
-    //     }, 1000);
-    // }, []);
+
+export const router = getLayoutRouter()
+let rootRouter = getRootRouter()
+router.addParent(rootRouter)
+rootRouter.addChild(router)
+// rootRouter.subRouter = router
+
+function AppLayout() {
+    let ref = useRef()
+    useEffect(() => {
+        return router.mount(ref.current)
+    }, []);
     return (
         <Layout className='rg-layout'>
             <RgSide />
             <Layout>
                 <RgHeader />
-                <RgContent>{props.children}</RgContent>
-                {/* <RgFooter /> */}
+                <RgContent >
+                    <div className='full' ref={ref}></div>
+                </RgContent>
             </Layout>
         </Layout>
     )
 }
+
+
+
+
+// export function injectRouteHooks() {
+//     return {
+//         beforeHook({ location }, next) {
+//             // console.log(location)
+//             next()
+//         }
+//     }
+// }
+
+
+
+AppLayout.injectRouteHooks = function () {
+    return {
+        beforeHook({ location }, next) {
+            // console.log(location)
+            next()
+        }
+    }
+}
+
+export default AppLayout

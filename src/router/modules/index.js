@@ -9,7 +9,7 @@ let contextList = [
 const moduleMap = {}
 
 contextList.forEach(({ key, context }) => {
-    let routes = parseContext(context)
+    let routes = parseContext(context, key)
     moduleMap[key] = routes
 })
 

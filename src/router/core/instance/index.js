@@ -1,17 +1,26 @@
 
+// import ReactDOM from 'react-dom'
 
-import { createHashHistory as createHistory } from "history";
-import { isArray, isFun, isPromise } from '@/libs'
-
+import { createHashHistory as createHistory } from "../history/index";
+// eslint-disable-next-line 
+import Hooks, { keyMap as hookKeyMap, keys as hookKeys } from '../hooks/index'
 import RouterCache from '../cache/index'
-
+import { createLocation } from '../location/index'
 import Matcher from '../matcher/index'
+
+
 
 function Router(options) {
     let router = this
-    router.options = options
-
-    this.history = createHistory(options)
+    router.options = { ...options }
+    this.isRoot = !!options.isRoot
+    this.curLocation = null
+    if (this.isRoot) {
+        this.history = createHistory(router.options)
+        this.history.listen(location => {
+            router.locationChange(location)
+        })
+    }
 
     router.cache = new RouterCache(router)   // 缓存
     router.matcher = new Matcher(router)   // 匹配器初始化
@@ -23,65 +32,109 @@ function Router(options) {
 
 const prototype = Router.prototype
 
+
+prototype.push = function (options) {
+    let pLocation = this.parent ? this.parent.curLocation : null
+    let location = createLocation(options, pLocation)
+    this.locationChange(location, () => {
+        this.history.pushState(location)
+    })
+
+}
+
+
 prototype.addRoutes = function (list) {
     this.matcher.addRoutes(list)
+
 }
+
+prototype.addChild = function (router) {
+    this.child = router
+    router.history = this.history
+}
+
+prototype.addParent = function (router) {
+    this.parent = router
+}
+
 prototype.findRoute = function (location) {
     this.matcher.findRoute(location)
 }
 
-prototype.bind = function (wrapper) {
+// 挂载 
+prototype.mount = function (wrapper) {
     if (!wrapper) return
-    let router = this
-    router.wrapper = wrapper
-
     this.el = createEl()
-
     wrapper.appendChild(this.el)
-    router.locationChange(router.history.location)
-
-    let unlisen = this.history.listen(location => {
-        router.locationChange(location)
-    })
-    this.unbind = () => {
-        console.log('解除绑定')
-        this.unbind = null
-        unlisen()
+    // 挂载的时候切换路由
+    this.unMount = () => {
+        this.history && this.history.unlisten()
+        this.unMount = null
     }
-    return this.unbind
-
+    if (this.isRoot) {
+        this.locationChange(createLocation())
+    }
+    return this.unMount
 }
+
+
 
 /**
  * 路由跳转
  * @param {*} location 
  */
-prototype.locationChange = function (location) {
+prototype.locationChange = function (location, cb) {
     let { cache, matcher } = this
-
-    let routeRecord = matcher.match(location.pathname)
-
+    let { routeRecord, unmatchPathname } = matcher.match(location.pathname)
     if (!routeRecord) return
 
     let key = routeRecord.key
 
     let cacheItem = cache.getByKey(key)
-
-    if (!cacheItem) {
-        cache.createCacheItem(routeRecord, (cacheItem) => {
-            this.el.appendChild(cacheItem.el)
-            cacheItem.hide()
-            cacheItem.runBeforeRouterHooks(location, () => {
-                cache.changeCacheItem(cacheItem)   // 切换
-            })
+    if (cacheItem) {
+        // 路由拦截 
+        routeRecord.hooks.run(hookKeyMap.beforeHook, { location }, () => {
+            cache.changeCacheItem(cacheItem)   // 切换
+            matcher.setCurRouteRecord(routeRecord)
+            this.curLocation = createLocation(routeRecord.matchPath)
+            if (this.child) {
+                let subLocation = createLocation(unmatchPathname, location)
+                this.child.locationChange(subLocation, cb)
+            } else {
+                cb && cb()
+            }
         })
+        return
     }
-    cacheItem.runBeforeRouterHooks(location, () => {
-        cache.changeCacheItem(cacheItem)   // 切换
+    // 加载组件
+    routeRecord.getComponent(() => {
+        // 运行 beforeRouterEnter
+        routeRecord.hooks.run(hookKeyMap.beforeHook, { location }, () => {
+            // 创建缓存对象
+            let cacheItem = cache.createCacheItem(routeRecord)
+            this.el.appendChild(cacheItem.el)
+            cache.changeCacheItem(cacheItem)
+            matcher.setCurRouteRecord(routeRecord)
+            this.curLocation = createLocation(routeRecord.matchPath)
+            if (this.child) {
+                let subLocation = createLocation(unmatchPathname, location)
+                this.child.locationChange(subLocation, cb)
+            } else {
+                cb && cb()
+            }
+
+        })
     })
 
 }
 
+
+prototype.getPathname = function () {
+    let curCacheItem = this.cache.curCacheItem
+    if (!curCacheItem) return
+    let routeConfig = curCacheItem.routeConfig
+    return routeConfig.matchPath
+}
 
 function createEl() {
     let el = document.createElement('div')

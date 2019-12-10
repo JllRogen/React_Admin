@@ -1,8 +1,5 @@
-
+// eslint-disable-next-line
 import React, { useState, useEffect } from "react"
-
-import ReactDOM from 'react-dom'
-import { Button } from 'antd'
 
 
 export default class extends React.Component {

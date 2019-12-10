@@ -7,6 +7,7 @@ const component = () => import(/* webpackChunkName: 'roleMgr' */ "./index.js")
 export default {
     id: '32323',
     title: '消息详情',
+    cache: true,  // 缓存页面
     component,
 }
 

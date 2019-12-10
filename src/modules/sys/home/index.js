@@ -5,6 +5,7 @@ import React, { useState, useEffect, } from "react"
 
 
 import './index.less'
+// eslint-disable-next-line 
 import { Affix, Button, Input } from 'antd'
 
 
@@ -61,22 +62,6 @@ export default function Home() {
 
 
 
-
-
-
-
-function Counter({ initialCount }) {
-    const [count, setCount] = useState(initialCount);
-    return (
-        <>
-            <div>Count: {count}</div>
-
-            <Button onClick={() => setCount(initialCount)}>Reset</Button>
-            <Button onClick={() => setCount(prevCount => prevCount - 1)}>-</Button>
-            <Button onClick={() => setCount(prevCount => prevCount + 1)}>+</Button>
-        </>
-    );
-}
 
 
 

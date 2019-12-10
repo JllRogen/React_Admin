@@ -1,12 +1,12 @@
 import { isArray } from '@/libs/index'
 import { RouteRecord } from '../route/index'
-import { getPathBlocks } from '../utils/index'
+// import { getPathBlocks } from '../utils/index'
 
 function Matcher(router) {
 
     this.routeRecords = []
     this.routeRecordMap = {}
-
+    this.curRouteRecord = null
     this.router = router
     let options = router.options
 
@@ -15,16 +15,33 @@ function Matcher(router) {
 }
 
 
+
+
 const prototype = Matcher.prototype
 
+
+
+
 // 匹配
-prototype.match = function (path) {
-    let targetPathBlocks = getPathBlocks(path)
-    let matchPath = targetPathBlocks.join('/')
-    return this.routeRecords.find(routeRecord => {
-        return matchPath.indexOf(routeRecord.path) === 0
-        // return targetPathBlocks[0] === routeRecord.pathBlocks[0]
+prototype.match = function (pathname) {
+
+    if (!pathname) return {}
+    // let matchPath = pathBlocks.join('/')
+    // pathname = pathname.substr(1)
+    let matchedRouteRecords = this.routeRecords.find(routeRecord => {
+        return pathname.indexOf(routeRecord.matchPath) === 0
     })
+
+    if (!matchedRouteRecords) return {}
+    let matchPath = matchedRouteRecords.matchPath
+    let unmatchPathname = pathname.substr(matchPath.length)
+    return {
+        routeRecord: matchedRouteRecords,
+        unmatchPathname,   // 没有匹配到的路由
+
+    }
+
+
 }
 // 添加路由
 prototype.addRoutes = function (routeConfigs) {
@@ -39,6 +56,9 @@ prototype.addRoutes = function (routeConfigs) {
     })
 }
 
+prototype.setCurRouteRecord = function (routeRecord) {
+    this.curRouteRecord = routeRecord
+}
 
 
 

@@ -66,6 +66,10 @@ export function isPromise(val) {
     )
 }
 
+export function isError(err) {
+    return _toString.call(err).indexOf('Error') > -1
+}
+
 export function isFun(val) {
     return _toString.call(val) === '[object Function]'
 }

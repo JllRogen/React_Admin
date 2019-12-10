@@ -13,6 +13,8 @@ const { Header } = Layout
  */
 export default function () {
     return (
-        <Header className='rg-header'></Header>
+        <Header className='rg-header'>
+            <h1>后台管理系统</h1>
+        </Header>
     )
 }

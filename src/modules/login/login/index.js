@@ -9,9 +9,9 @@ import { Button } from 'antd'
 export default function Login(props) {
     console.log(props)
     useEffect(() => {
-        return props.addBeforeHook((location, next) => {
-            debugger
-        })
+        // return props.addBeforeHook((location, next) => {
+        //     debugger
+        // })
     }, []);
     return (
         <div>
@@ -21,7 +21,11 @@ export default function Login(props) {
     )
 }
 
-// 路由进入的调用
-Login.beforeRouteEnter = function (location, next) {
-    debugger
+Login.injectRouteHooks = function () {
+    return {
+        beforeHook({ location }, next) {
+            next()
+        }
+    }
 }
+
