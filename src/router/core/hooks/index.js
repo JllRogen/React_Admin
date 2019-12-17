@@ -17,6 +17,8 @@ function Hooks() {
 }
 
 
+
+
 const prototype = Hooks.prototype
 // 添加
 prototype.addHook = function (key, fn) {
@@ -43,6 +45,16 @@ prototype.run = function (key, params, cb) {
     }
 }
 
+
+prototype.setHooks = function (hooks) {
+    if (!isPlainObject(hooks)) return
+    keys.forEach(key => {
+        let fn = hooks[key]
+        if (isFun(fn)) {
+            this.addHook(key, fn)
+        }
+    })
+}
 
 
 

@@ -21,6 +21,6 @@ export function createLocation(params = Object.assign({}, window.location), fath
         tempLocation.fullPathname = pathname
     }
     tempLocation.pathBlocks = getPathBlocks(pathname)
-    console.log(tempLocation)
+    // console.log(tempLocation)
     return tempLocation
 }

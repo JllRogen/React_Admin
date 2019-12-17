@@ -2,7 +2,7 @@
 // 路由标记类
 import { isPlainObject, isFun, isPromise, } from "@/libs"
 
-import Hooks, { keys as hookKeys } from '../hooks/index'
+// import Hooks, { keys as hookKeys } from '../hooks/index'
 
 
 function RouteRecord(routeConfig, router) {
@@ -30,11 +30,10 @@ function RouteRecord(routeConfig, router) {
     this.cache = !!routeConfig.cache   // 是否缓存页面
 
     this.mate = routeConfig.meta || {}
-    let pathBlocks = path.split('/')
-    this.pathBlocks = pathBlocks
+    // let pathBlocks = path.split('/')
+    // this.pathBlocks = pathBlocks
 
-    this.hooks = new Hooks()
-    // this.beforeHooks = null
+    // this.hooks = new Hooks()
 
 }
 
@@ -55,7 +54,7 @@ prototype.getComponent = function (cb) {
         p.then(tempC => {
             let component = tempC.default
             this._component = component
-            this.setHooks()
+            // this.setHooks()
             cb(component)
         })
     } else {
@@ -68,31 +67,19 @@ prototype.getComponent = function (cb) {
     }
 }
 
-// 设置hooks
-prototype.setHooks = function () {
-    let _component = this._component
-    let injectRouteHooks = _component.injectRouteHooks
-    if (!isFun(injectRouteHooks)) return
-    let componentHooks = _component.injectRouteHooks()
-    if (!isPlainObject(componentHooks)) return
-    hookKeys.forEach(key => {
-        let fn = componentHooks[key]
-        if (isFun(fn)) {
-            this.hooks.addHook(key, fn)
-        }
-    })
-}
-// // 运行路由守卫
-// prototype.runHooks = function (key, params, cb) {
-//     let targetHooks = this.hooks[key]
-//     debugger
-//     if (isArray(targetHooks) && targetHooks.length > 0) {
-//         runQueue(targetHooks, (hook, next) => {
-//             hook(params, next)
-//         }, cb)
-//     } else {
-//         cb()
-//     }
+// // 设置hooks
+// prototype.setHooks = function () {
+//     let _component = this._component
+//     let injectRouteHooks = _component.injectRouteHooks
+//     if (!isFun(injectRouteHooks)) return
+//     let componentHooks = _component.injectRouteHooks()
+//     if (!isPlainObject(componentHooks)) return
+//     hookKeys.forEach(key => {
+//         let fn = componentHooks[key]
+//         if (isFun(fn)) {
+//             this.hooks.addHook(key, fn)
+//         }
+//     })
 // }
 
 

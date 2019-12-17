@@ -93,7 +93,7 @@ prototype.locationChange = function (location, cb) {
     let cacheItem = cache.getByKey(key)
     if (cacheItem) {
         // 路由拦截 
-        routeRecord.hooks.run(hookKeyMap.beforeHook, { location }, () => {
+        cacheItem.hooks.run(hookKeyMap.beforeHook, { location }, () => {
             cache.changeCacheItem(cacheItem)   // 切换
             matcher.setCurRouteRecord(routeRecord)
             this.curLocation = createLocation(routeRecord.matchPath)
@@ -108,21 +108,23 @@ prototype.locationChange = function (location, cb) {
     }
     // 加载组件
     routeRecord.getComponent(() => {
+
         // 运行 beforeRouterEnter
-        routeRecord.hooks.run(hookKeyMap.beforeHook, { location }, () => {
-            // 创建缓存对象
-            let cacheItem = cache.createCacheItem(routeRecord)
+        let cacheItem = cache.createCacheItem(routeRecord, location)
+        cacheItem.hooks.run(hookKeyMap.beforeHook, { location }, () => {
+            cacheItem.renderComponent(location)
             this.el.appendChild(cacheItem.el)
             cache.changeCacheItem(cacheItem)
+
             matcher.setCurRouteRecord(routeRecord)
             this.curLocation = createLocation(routeRecord.matchPath)
+
             if (this.child) {
                 let subLocation = createLocation(unmatchPathname, location)
                 this.child.locationChange(subLocation, cb)
             } else {
                 cb && cb()
             }
-
         })
     })
 

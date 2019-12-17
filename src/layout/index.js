@@ -36,22 +36,10 @@ function AppLayout() {
 
 
 
-
-// export function injectRouteHooks() {
-//     return {
-//         beforeHook({ location }, next) {
-//             // console.log(location)
-//             next()
-//         }
-//     }
-// }
-
-
-
 AppLayout.injectRouteHooks = function () {
     return {
         beforeHook({ location }, next) {
-            // console.log(location)
+            console.log('layout Route hook')
             next()
         }
     }

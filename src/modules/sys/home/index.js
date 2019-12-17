@@ -25,26 +25,36 @@ function useRgLong(x) {
     return [value, setLong]
 }
 
+const routeHandler = {}
 
 
-
-
-
-// let ref = React.createRef()
-export default function Home() {
+export default function Home(prop) {
     console.log("home ")
     const [test, setTest] = useState(1)
+    const [count, setCount] = useState(1);
+
     useEffect(() => {
-        // console.log('aefa ')
-        return () => {
-            console.log('home 销毁了')
-        }
-    }, [])
+
+    }, []);
+
+    useEffect(() => {
+        prop.routeCb({
+            beforeHook({ location }, next) {
+                setTest(test => {
+                    console.log(test)
+                    return test
+                })
+                next()
+            }
+        })
+    }, []);
 
     return (
         <div className='home' >
             <h1>home</h1>
             <Button onClick={() => setTest(test + 1)}>{test}</Button>
+            <Button onClick={() => setCount(count + 1)}>{count}count</Button>
+            <div>{count}</div>
             <InputView></InputView>
             <KmView></KmView>
             <MView></MView>
@@ -61,7 +71,16 @@ export default function Home() {
 }
 
 
-
+// Home.injectRouteHooks = function () {
+//     return {
+//         beforeHook({ location }, next) {
+//             let { setTest, setCount } = routeHandler
+//             setTest && setTest((test) => test * 2)
+//             setCount && setCount((count) => count * 2)
+//             next()
+//         }
+//     }
+// }
 
 
 

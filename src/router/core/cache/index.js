@@ -42,8 +42,8 @@ prototype.changeCacheItem = function (cacheItem) {
 
 
 
-prototype.createCacheItem = function (route, cb) {
-    let cacheItem = new CacheItem(route, cb)
+prototype.createCacheItem = function (route, location, cb) {
+    let cacheItem = new CacheItem(route, location, cb)
     this.data[cacheItem.key] = cacheItem
     return cacheItem
 }
